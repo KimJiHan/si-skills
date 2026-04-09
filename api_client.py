@@ -125,7 +125,7 @@ def main():
         "--type", 
         type=str, 
         default="world_trends", 
-        help="Data type to fetch (e.g., world_trends, report, policy). Default: world_trends"
+        help="Data type to fetch (e.g., world_trends, report (alias for research_report), policy). Default: world_trends"
     )
     args = parser.parse_args()
 
@@ -139,7 +139,12 @@ def main():
         print(json.dumps({"error": "SI_API_KEY environment variable is not set. Please create a .env file."}, ensure_ascii=False))
         sys.exit(1)
 
-    result = search_seoul_institute(api_key, args.type)
+    # Alias Handling
+    target_type = args.type
+    if target_type == "report":
+        target_type = "research_report"
+
+    result = search_seoul_institute(api_key, target_type)
     
     # Print the result as valid JSON for agents to parse easily
     print(json.dumps(result, ensure_ascii=False, indent=2))
