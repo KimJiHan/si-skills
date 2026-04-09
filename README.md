@@ -1,4 +1,4 @@
-# Seoul Institute API Skill Pack (서울연구원 스킬)
+# The Seoul Institute API Skill Pack (서울연구원 스킬)
 
 [![State](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
 [![Type](https://img.shields.io/badge/Type-AI_Skill-blue.svg)]()
