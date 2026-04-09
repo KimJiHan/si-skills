@@ -76,17 +76,32 @@ def search_seoul_institute(api_key, data_type="world_trends"):
             date_val = extract_cdata_text(row.findtext('date', ''))
             url = extract_cdata_text(row.findtext('identifier', ''))
             item_type = extract_cdata_text(row.findtext('type', ''))
+            author = extract_cdata_text(row.findtext('creator', ''))
             
             # Simple HTML stripping for description if needed
             # Since LLMs can read simple HTML, we leave it as is, or we could use regex to clean it
             import re
             import html
-            desc_clean = html.unescape(desc)
-            desc_clean = re.sub(r'<[^>]+>', '', desc_clean).strip()
+            desc_raw_html = html.unescape(desc)
+            
+            # Extract image URLs
+            images = re.findall(r'<img[^>]+src=["\']([^"\']+)["\']', desc_raw_html, flags=re.IGNORECASE)
+            full_images = []
+            for img in images:
+                if img.startswith('/'):
+                    full_images.append("https://www.si.re.kr" + img)
+                elif not img.startswith('http'):
+                    full_images.append("https://www.si.re.kr/" + img)
+                else:
+                    full_images.append(img)
+            
+            desc_clean = re.sub(r'<[^>]+>', '', desc_raw_html).strip()
             
             results.append({
                 'title': title,
+                'author': author,
                 'description': desc_clean,
+                'images': full_images,
                 'date': date_val,
                 'url': url,
                 'type': item_type
