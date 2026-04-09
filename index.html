@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울연구원 OpenAPI 테스터</title>
+    <meta name="description" content="서울연구원 OpenAPI 데이터 시각화 웹 애플리케이션">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <div class="background-elements">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+    
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-content">
+                <h1 id="main-title">서울연구원 OpenAPI 테스터</h1>
+                <p id="sub-title">Explore and Visualize Open Data from The Seoul Institute</p>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="테마 전환">
+                    <svg class="icon moon-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg class="icon sun-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="filter-group">
+                    <select id="type-select" class="type-select">
+                        <option value="research_report">연구보고서</option>
+                        <option value="si_competition">서울연구논문 공모전</option>
+                        <option value="other">단행본</option>
+                        <option value="world_trends" selected>세계도시동향</option>
+                        <option value="policy_report">정책리포트</option>
+                        <option value="infographics">서울인포그래픽스</option>
+                        <option value="studies">서울도시연구</option>
+                        <option value="cardnews">카드뉴스</option>
+                        <option value="small_report">작은연구 좋은서울</option>
+                        <option value="pr_video">영상이야기</option>
+                        <option value="collection">학술행사자료집</option>
+                    </select>
+                </div>
+                <div class="stats-bar" id="stats-bar" style="opacity: 0;">
+                    <span class="total-count">총 <strong id="total-nodes">0</strong>건의 데이터 추출 완료</span>
+                </div>
+            </div>
+
+            <div id="loading" class="loading-state">
+                <div class="spinner"></div>
+                <p>최신 정책동향을 불러오는 중입니다...</p>
+            </div>
+            
+            <div id="error-message" class="error-state" style="display: none;">
+                <div class="error-icon">⚠️</div>
+                <p class="error-text">데이터를 불러오는데 실패했습니다.<br>로컬 프록시 서버(python3 proxy_server.py)가 실행 중인지 확인해주세요.</p>
+                <button id="retry-btn" class="btn primary-btn">다시 시도</button>
+            </div>
+
+            <div id="trends-grid" class="trends-grid">
+                <!-- Cards will be injected dynamically -->
+            </div>
+            
+            <!-- Description Modal -->
+            <div id="desc-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2 id="modal-title"></h2>
+                    <div class="modal-date" id="modal-date"></div>
+                    <div id="modal-body" class="modal-body"></div>
+                    <a id="modal-link" href="#" target="_blank" class="btn primary-btn mt-4">원문 페이지로 이동</a>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="app-footer">
+            <p>&copy; 2026 The Seoul Institute API Tester</p>
+        </footer>
+    </div>
+</body>
+</html>
