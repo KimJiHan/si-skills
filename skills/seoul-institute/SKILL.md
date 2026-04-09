@@ -35,7 +35,7 @@ The python script returns a JSON object containing:
 - `success` (boolean)
 - `total` (integer): Total number of results available
 - `count` (integer): Number of results returned in this batch
-- `results` (array): Array of items, each containing `title`, `description`, `date`, `url`, and `type`.
+- `results` (array): Array of items, each containing `title`, `author` (the creator or researcher names), `description` (HTML-stripped summary), `images` (array of image URLs found in the content), `date`, `url`, and `type`.
 
 ### Handling Outputs
 Do not try to read or parse the XML yourself. The `api_client.py` script has already sanitized the XML into a highly readable JSON format, removing problematic CDATA and complex tags. Directly read the STDOUT of your `run_command` and present the findings to the user in a neatly summarized Markdown format.
